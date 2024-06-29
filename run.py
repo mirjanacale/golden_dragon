@@ -32,3 +32,5 @@ def check_collisions():
 def game_over():
     pass
 
+
+
