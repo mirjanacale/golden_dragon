@@ -40,6 +40,7 @@ class Gold:
     
 
 def next_turn():
+    
     pass
 
 def change_direction(new_direction):
