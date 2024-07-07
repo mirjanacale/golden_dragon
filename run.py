@@ -1,7 +1,9 @@
 #imports
 import os
-from tkinter import *
 import random
+import argparse
+
+
 
 GAME_WIDTH = 800
 GAME_HEIGHT = 500
@@ -31,6 +33,16 @@ def check_collisions():
 
 def game_over():
     pass
+
+
+
+
+score = 0
+direction = 'down'
+
+
+
+
 
 
 
