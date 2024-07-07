@@ -17,7 +17,18 @@ HIGH_SCORE_FILE = "high_score.txt"
 
 
 class Dragon:
-    pass
+    def __init__(self):
+        self.body_size = BODY_PARTS
+        self.coordinates = []
+        start_x = GAME_WIDTH // 2
+        start_y = GAME_HEIGHT // 2
+        # Loop through the number of body parts and add the coordinates of each body part to the list
+        for i in range(0, BODY_PARTS):
+            y = start_y + i * SPACE_SIZE
+            
+            self.coordinates.append([start_x, y])
+    
+    
 
 class Gold:
      def __init__(self):
