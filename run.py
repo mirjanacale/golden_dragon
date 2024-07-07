@@ -20,7 +20,13 @@ class Dragon:
     pass
 
 class Gold:
-    pass
+     def __init__(self):
+        x = random.randint(0, int((GAME_WIDTH / SPACE_SIZE) - 1)) * SPACE_SIZE
+        y = random.randint(0, int((GAME_HEIGHT / SPACE_SIZE) - 1)) * SPACE_SIZE
+        self.coordinates = [x, y]
+
+    
+    
 
 def next_turn():
     pass
