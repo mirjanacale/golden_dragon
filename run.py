@@ -1,43 +1,35 @@
 #imports
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout
+from PyQt5.QtGui import QPainter, QColor, QBrush
+from PyQt5.QtCore import Qt, QRect
 import os
 import random
-import argparse
 
-
-
+BACKGROUND_COLOR = Qt.white
+DRAGON_COLOR = Qt.red
+GOLD_COLOR = Qt.yellow
+SPACE_SIZE = 10
 GAME_WIDTH = 800
 GAME_HEIGHT = 500
-SPEED = 100
-SPACE_SIZE = 50
-BODY_PARTS = 3
-DRAGON_COLOR = "#00FF00"
-GOLD_COLOR = "#ffD700"
-BACKGROUND_COLOR = "#000000"
-HIGH_SCORE_FILE = "high_score.txt"
-
+HIGH_SCORE_FILE = 'high_score.txt'
 
 class Dragon:
     def __init__(self):
-        self.body_size = BODY_PARTS
-        self.coordinates = []
-        start_x = GAME_WIDTH // 2
-        start_y = GAME_HEIGHT // 2
-        # Loop through the number of body parts and add the coordinates of each body part to the list
-        for i in range(0, BODY_PARTS):
-            y = start_y + i * SPACE_SIZE
-            
-            self.coordinates.append([start_x, y])
-    
-    
+        self.coordinates = [[400, 250], [390, 250], [380, 250]] 
+        # initial coordinates of the dragon
 
 class Gold:
-     def __init__(self):
-        x = random.randint(0, int((GAME_WIDTH / SPACE_SIZE) - 1)) * SPACE_SIZE
-        y = random.randint(0, int((GAME_HEIGHT / SPACE_SIZE) - 1)) * SPACE_SIZE
-        self.coordinates = [x, y]
+    def __init__(self):
+        self.coordinates = [random.randint(0, 790), random.randint(0, 490)]  
+        # random initial coordinates of the gold
 
-    
-    
+
+
+
+
+
+
 
 def next_turn():
     
