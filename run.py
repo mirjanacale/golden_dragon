@@ -92,8 +92,65 @@ class DragonGame(QWidget):
 
         qp.setBrush(QBrush(QColor(GOLD_COLOR)))
         qp.drawRect(self.gold.coordinates[0], self.gold.coordinates[1], SPACE_SIZE, SPACE_SIZE)
-   
-    
+        
+    def keyPressEvent(self, e):
+        print("Key pressed:", e.key())
+        if e.key() == Qt.Key_Up:
+            self.direction = "up"
+            print("Direction set to 'up'.")
+        elif e.key() == Qt.Key_Down:
+            self.direction = "down"
+            print("Direction set to 'down'.")
+        elif e.key() == Qt.Key_Left:
+            self.direction = "left"
+            print("Direction set to 'left'.")
+        elif e.key() == Qt.Key_Right:
+            self.direction = "right"
+            print("Direction set to 'right'.")
+            
+        #Call the nextTurn function
+        self.nextTurn()
+        print("Next turn called.")
+        
+    def nextTurn(self):
+         """
+        Updates the game state for the next turn.
+
+        This method moves the dragon in the specified direction and handles gold collection and collision detection.
+        """
+         x, y = self.dragon.coordinates[0]
+
+         direction_offsets = {
+            "up": (0, -SPACE_SIZE),
+            "down": (0, SPACE_SIZE),
+            "left": (-SPACE_SIZE, 0),
+            "right": (SPACE_SIZE, 0),
+        }
+        
+         movement_offset = direction_offsets.get(self.direction)
+         if not movement_offset:
+            print(f"Invalid direction: {self.direction}. Ignoring this turn.")
+            return
+
+         x += movement_offset[0]
+         y += movement_offset[1]
+         self.dragon.coordinates.insert(0, [x, y])
+
+         if x == self.gold.coordinates[0] and y == self.gold.coordinates[1]:
+            self.score += 1
+            print(f"Score: {self.score}")
+            self.gold = Gold()
+            print("Gold collected. New gold coordinates:", self.gold.coordinates)
+         else:
+            self.dragon.coordinates.pop()
+
+         if self.checkCollisions():
+            self.gameOver()
+            return
+
+         self.update()
+
+        
         
 
 
@@ -105,23 +162,6 @@ class DragonGame(QWidget):
 
 
     
-
-def change_direction(new_direction):
-    pass
-
-def check_collisions():
-    pass
-
-def game_over():
-    pass
-
-
-
-
-score = 0
-direction = 'down'
-
-
 
 
 
