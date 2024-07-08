@@ -113,42 +113,83 @@ class DragonGame(QWidget):
         print("Next turn called.")
         
     def nextTurn(self):
-         """
+        """
         Updates the game state for the next turn.
 
-        This method moves the dragon in the specified direction and handles gold collection and collision detection.
+        This method moves the dragon in the specified direction, handles gold collection, and detects collisions.
         """
-         x, y = self.dragon.coordinates[0]
+        
+        # Get the current coordinates of the dragon
+        x, y = self.dragon.coordinates[0]
 
-         direction_offsets = {
+        # Define the direction offsets for each possible direction
+        direction_offsets = {
             "up": (0, -SPACE_SIZE),
             "down": (0, SPACE_SIZE),
             "left": (-SPACE_SIZE, 0),
             "right": (SPACE_SIZE, 0),
         }
         
-         movement_offset = direction_offsets.get(self.direction)
-         if not movement_offset:
+        # Get the movement offset for the current direction
+        movement_offset = direction_offsets.get(self.direction)
+        
+        # If the direction is invalid, ignore this turn
+        if not movement_offset:
             print(f"Invalid direction: {self.direction}. Ignoring this turn.")
             return
 
-         x += movement_offset[0]
-         y += movement_offset[1]
-         self.dragon.coordinates.insert(0, [x, y])
+        # Update the dragon's coordinates
+        x += movement_offset[0]
+        y += movement_offset[1]
+        self.dragon.coordinates.insert(0, [x, y])
 
-         if x == self.gold.coordinates[0] and y == self.gold.coordinates[1]:
+        # Check if the dragon has collected gold
+        if x == self.gold.coordinates[0] and y == self.gold.coordinates[1]:
             self.score += 1
             print(f"Score: {self.score}")
-            self.gold = Gold()
+            self.gold = Gold()  # Generate a new piece of gold
             print("Gold collected. New gold coordinates:", self.gold.coordinates)
-         else:
-            self.dragon.coordinates.pop()
+        else:
+            self.dragon.coordinates.pop()  # Remove the last dragon coordinate
 
-         if self.checkCollisions():
+        # Check for collisions and end the game if necessary
+        if self.checkCollisions():
             self.gameOver()
             return
 
-         self.update()
+        # Update the game display
+        self.update()
+        
+    def checkCollisions(self):
+         """
+        Check for collisions between the dragon and the game boundaries or other body parts.
+
+        This method checks if the dragon has moved outside the game boundaries or collided with any
+        of its own body parts. It returns True if a collision is detected, indicating that the game
+        should end. Otherwise, it returns False.
+
+        Returns:
+            bool: True if a collision is detected, False otherwise.
+        """
+        
+         x, y = self.dragon.coordinates[0]
+
+         if x < 0 or x >= GAME_WIDTH or y < 0 or y >= GAME_HEIGHT:
+            return True
+
+         for body_part in self.dragon.coordinates[1:]:
+            if x == body_part[0] and y == body_part[1]:
+                return True
+
+         return False
+     
+    def gameOver(self):
+        print("GAME OVER")
+        if self.score > self.high_score:
+            self.high_score = self.score
+            self.save_high_score(self.high_score)
+        print("High Score:", self.high_score)
+     
 
         
         
