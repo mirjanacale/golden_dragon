@@ -73,7 +73,26 @@ class DragonGame(QWidget):
         qp = QPainter()
         qp.begin(self)
         self.drawGame(qp)
-        qp.end()    
+        qp.end()
+        
+    def drawGame(self, qp):
+        """
+        Draws the game on the QPainter object.
+
+        Args:
+            qp (QPainter): The QPainter object used to draw the game.
+        """
+        
+        qp.setBrush(QBrush(QColor(BACKGROUND_COLOR)))
+        qp.drawRect(0, 0, 800, 500)
+
+        qp.setBrush(QBrush(QColor(DRAGON_COLOR)))
+        for x, y in self.dragon.coordinates:
+            qp.drawRect(x, y, SPACE_SIZE, SPACE_SIZE)
+
+        qp.setBrush(QBrush(QColor(GOLD_COLOR)))
+        qp.drawRect(self.gold.coordinates[0], self.gold.coordinates[1], SPACE_SIZE, SPACE_SIZE)
+   
     
         
 
